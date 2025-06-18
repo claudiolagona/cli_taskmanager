@@ -1,0 +1,10 @@
+com\cli_taskmanager\core\Task.class
+com\cli_taskmanager\App.class
+com\cli_taskmanager\manager\TaskManagerImplementation.class
+com\cli_taskmanager\core\CompositeTask.class
+com\cli_taskmanager\core\SimpleTask.class
+com\cli_taskmanager\factory\TaskFactoryImplementation.class
+com\cli_taskmanager\factory\TaskFactory.class
+com\cli_taskmanager\manager\TaskManager.class
+com\cli_taskmanager\factory\TaskFactoryImplementation$1.class
+com\cli_taskmanager\factory\TaskType.class

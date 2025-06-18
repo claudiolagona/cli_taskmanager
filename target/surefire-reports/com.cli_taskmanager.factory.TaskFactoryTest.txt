@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.cli_taskmanager.factory.TaskFactoryTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.021 s <<< FAILURE! -- in com.cli_taskmanager.factory.TaskFactoryTest
+com.cli_taskmanager.factory.TaskFactoryTest.testInvalidTypeThrowsException -- Time elapsed: 0.007 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3111)
+	at com.cli_taskmanager.factory.TaskFactoryTest.testInvalidTypeThrowsException(TaskFactoryTest.java:30)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.cli_taskmanager.factory.TaskType.ordinal()" because "type" is null
+	at com.cli_taskmanager.factory.TaskFactoryImplementation.createTask(TaskFactoryImplementation.java:10)
+	at com.cli_taskmanager.factory.TaskFactoryTest.lambda$testInvalidTypeThrowsException$0(TaskFactoryTest.java:31)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+

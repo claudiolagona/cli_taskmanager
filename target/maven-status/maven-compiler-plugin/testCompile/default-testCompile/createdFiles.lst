@@ -1,0 +1,4 @@
+com\cli_taskmanager\AppTest.class
+com\cli_taskmanager\manager\TaskManagerImplementationTest.class
+com\cli_taskmanager\factory\TaskFactoryTest.class
+com\cli_taskmanager\core\TaskTest.class
