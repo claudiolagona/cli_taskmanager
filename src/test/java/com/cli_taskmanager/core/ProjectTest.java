@@ -3,6 +3,8 @@ package com.cli_taskmanager.core;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.cli_taskmanager.builder.ProjectBuilder;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +20,10 @@ class ProjectTest {
         when(mockTask1.getId()).thenReturn("1");
         when(mockTask2.getId()).thenReturn("2");
 
-        project = new ProjectImplementation("Test Project", "Description Project");
+        project = new ProjectBuilder()
+                .setName("Project")
+                .setDescription("Description")
+                .build();
     }
 
     @Test

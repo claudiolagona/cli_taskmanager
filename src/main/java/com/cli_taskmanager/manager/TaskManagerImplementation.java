@@ -1,10 +1,10 @@
 package com.cli_taskmanager.manager;
 
 import com.cli_taskmanager.core.Task;
+import com.cli_taskmanager.exceptions.TaskManagerException;
 import com.cli_taskmanager.persistence.FileStoreManager;
 import com.cli_taskmanager.persistence.JsonFileStoreManager;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -63,11 +63,11 @@ public class TaskManagerImplementation implements TaskManager {
         tasks.clear();
     }
 
-    public void saveTasksToFile() throws IOException {
+    public void saveTasksToFile() throws TaskManagerException {
         fileStoreManager.saveTasks(getAllTasks(), savePath);
     }
 
-    public void loadTasksFromFile() throws IOException {
+    public void loadTasksFromFile() throws TaskManagerException {
         List<Task> loadedTasks = fileStoreManager.loadTasks(savePath);
         tasks.clear();
         for (Task task : loadedTasks) {

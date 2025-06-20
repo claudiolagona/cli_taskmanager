@@ -3,7 +3,7 @@ package com.cli_taskmanager.core;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class SimpleTask implements Task {
+public class SimpleTask extends AbstractTask {
     private final String id;
     private final String name;
     private final String description;
@@ -23,7 +23,7 @@ public class SimpleTask implements Task {
     }
 
     public SimpleTask(String name, String description, LocalDate dueDate) {
-        this(name, description, dueDate, null, false);
+        this(name, description, dueDate, UUID.randomUUID().toString(), false);
     }
 
     @Override
@@ -54,6 +54,7 @@ public class SimpleTask implements Task {
     @Override
     public void execute() {
         this.completed = true;
+        notifyObservers("Task " + this.getName() + "completed");
     }
 
     public LocalDate getDueDate() {

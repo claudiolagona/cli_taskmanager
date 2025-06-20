@@ -2,11 +2,14 @@ package com.cli_taskmanager.persistence;
 
 import com.cli_taskmanager.core.SimpleTask;
 import com.cli_taskmanager.core.Task;
+import com.cli_taskmanager.exceptions.TaskManagerException;
 import org.junit.jupiter.api.*;
-import java.io.IOException;
-import java.nio.file.*;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,18 +18,18 @@ class JsonFileStoreManagerTest {
     private Path tempFile;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws Exception {
         storeManager = new JsonFileStoreManager();
         tempFile = Files.createTempFile("tasks", ".json");
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() throws Exception {
         Files.deleteIfExists(tempFile);
     }
 
     @Test
-    void testSaveAndLoadSimpleTasks() throws IOException {
+    void testSaveAndLoadSimpleTasks() throws TaskManagerException {
         SimpleTask task1 = new SimpleTask("Task 1", "Descrizione 1", LocalDate.of(2025, 6, 17));
         SimpleTask task2 = new SimpleTask("Task 2", "Descrizione 2", LocalDate.of(2025, 6, 18));
         task2.execute();
@@ -45,9 +48,10 @@ class JsonFileStoreManagerTest {
     }
 
     @Test
-    void testLoadFromNonExistentFile() throws IOException {
+    void testLoadFromNonExistentFile() throws TaskManagerException {
         Path nonExistentPath = Paths.get("tasks.json");
         List<Task> tasks = storeManager.loadTasks(nonExistentPath);
+        
         assertNotNull(tasks);
         assertTrue(tasks.isEmpty());
     }

@@ -1,6 +1,8 @@
 package com.cli_taskmanager.core;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class ProjectImplementation implements Project {
     private final String id;
@@ -8,11 +10,11 @@ public class ProjectImplementation implements Project {
     private final String description;
     private final List<Task> tasks;
 
-    public ProjectImplementation(String name, String description) {
+    public ProjectImplementation(String name, String description, List<Task> initialTasks) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
-        this.tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>(initialTasks);
     }
 
     @Override
@@ -39,7 +41,8 @@ public class ProjectImplementation implements Project {
     public double getProgress() {
         if (tasks.isEmpty())
             return 0.0;
-        return tasks.stream().mapToDouble(Task::getProgress).average().orElse(0.0);
+        double total = tasks.stream().mapToDouble(Task::getProgress).sum();
+        return total / tasks.size();
     }
 
     @Override

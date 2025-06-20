@@ -2,6 +2,7 @@ package com.cli_taskmanager.persistence;
 
 import com.cli_taskmanager.core.SimpleTask;
 import com.cli_taskmanager.core.Task;
+import com.cli_taskmanager.exceptions.TaskManagerException;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonFileStoreManager implements FileStoreManager {
+public class JsonFileStoreManager extends AbstractTaskStoreManager {
     private final Gson gson;
 
     public JsonFileStoreManager() {
@@ -26,7 +27,7 @@ public class JsonFileStoreManager implements FileStoreManager {
     }
 
     @Override
-    public void saveTasks(List<Task> tasks, Path filePath) throws IOException {
+    protected void doSave(List<Task> tasks, Path filePath) throws TaskManagerException {
         List<SimpleTask> simpleTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task instanceof SimpleTask) {
@@ -34,19 +35,32 @@ public class JsonFileStoreManager implements FileStoreManager {
             }
         }
 
-        String json = gson.toJson(simpleTasks);
-        Files.writeString(filePath, json);
+        try {
+            String json = gson.toJson(simpleTasks);
+            Files.writeString(filePath, json);
+        } catch (IOException e) {
+            throw new TaskManagerException("Error while saving tasks on file: " + filePath, e);
+        }
+        
     }
 
     @Override
-    public List<Task> loadTasks(Path filePath) throws IOException {
+    protected List<Task> doLoad(Path filePath) throws TaskManagerException {
         if (!Files.exists(filePath)) {
             return new ArrayList<>();
         }
 
-        String json = Files.readString(filePath);
-        Type taskListType = new TypeToken<List<SimpleTask>>() {
-        }.getType();
-        return gson.fromJson(json, taskListType);
+        try {
+            String json = Files.readString(filePath);
+            Type taskListType = new TypeToken<List<SimpleTask>>() {}.getType();
+            return gson.fromJson(json, taskListType);
+        } catch (IOException | JsonSyntaxException e) {
+            throw new TaskManagerException("Error while loading tasks from file: " + filePath, e);
+        }
+    }
+
+    @Override
+    protected void postLoad(List<Task> tasks) {
+        System.out.println("Uploaded " + tasks.size() + " files");
     }
 }

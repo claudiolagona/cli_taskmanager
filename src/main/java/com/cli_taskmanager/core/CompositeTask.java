@@ -1,10 +1,13 @@
 package com.cli_taskmanager.core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public class CompositeTask implements Task {
+import com.cli_taskmanager.iterator.CompositeTaskIterator;
+
+public class CompositeTask implements Task, Iterable<Task> {
     private final String id;
     private final String name;
     private final String description;
@@ -62,6 +65,11 @@ public class CompositeTask implements Task {
         for (Task task : subTasks) {
             task.execute();
         }
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new CompositeTaskIterator(subTasks);
     }
 
     public List<Task> getSubTasks() {

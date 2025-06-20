@@ -2,6 +2,7 @@ package com.cli_taskmanager.manager;
 
 import com.cli_taskmanager.core.SimpleTask;
 import com.cli_taskmanager.core.Task;
+import com.cli_taskmanager.exceptions.TaskManagerException;
 
 import org.junit.jupiter.api.*;
 import java.io.IOException;
@@ -31,7 +32,7 @@ class TaskManagerPersistenceTest {
     }
 
     @Test
-    void testSaveAndLoadTasks() throws IOException {
+    void testSaveAndLoadTasks() throws TaskManagerException {
         Task task1 = new SimpleTask("Test 1", "Desc1", LocalDate.now());
         Task task2 = new SimpleTask("Test 2", "Desc2", LocalDate.now().plusDays(1));
         manager.addTask(task1);
